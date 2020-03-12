@@ -9,7 +9,7 @@ on:
 runs:
   using: 'node12'
   main: 'dist/index.js'
-  env:
+  with:
     SLACK_WEBHOOK_URL : ${{ secrets.SLACK_WEBHOOK_URL }}
     PULL_REQUEST_NUMBER : ${{ github.event.pull_request.number }}
     PULL_REQUEST_TITLE : ${{ github.event.pull_request.title }}

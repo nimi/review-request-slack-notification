@@ -2,5 +2,6 @@ name: 'Slack pull request review notification'
 description: 'Receive a notification to slack new review requests'
 author: 'Nicholas Mitchell'
 
-runs: using: 'node12'
-main: 'dist/index.js'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'

@@ -1,16 +1,13 @@
 import * as core from '@actions/core'
-import {wait} from './wait'
+import {send} from './send'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`)
+    core.debug(`Sending notification to slack ...`)
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    await send()
 
-    core.setOutput('time', new Date().toTimeString())
+    core.setOutput('Finished sending notification', new Date().toTimeString())
   } catch (error) {
     core.setFailed(error.message)
   }

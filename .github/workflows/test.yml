@@ -13,7 +13,7 @@ env:
   PULL_REQUEST_BODY : ${{ github.event.pull_request.body }}
   PULL_REQUEST_COMPARE_BRANCH_NAME : ${{ github.event.pull_request.head.ref }}
   PULL_REQUEST_BASE_BRANCH_NAME : ${{ github.event.pull_request.base.ref }}
-  IS_SEND_HERE_MENTION : true
+  PULL_REQUEST : ${{ github.event.pull_request }}
 
 jobs:
   review_requested: # make sure the action works on a clean machine without building
@@ -21,5 +21,3 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: ./
-      with:
-        milliseconds: 1000

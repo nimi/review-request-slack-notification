@@ -4,11 +4,9 @@ import {send} from './send'
 async function run(): Promise<void> {
   try {
     core.debug(`Sending notification to slack ...`)
-    const containsIgnoreReviewer = JSON.parse(
-      process.env.IGNORED_REVIEWERS || '[]'
-    ).some((reviewer: string) => reviewer === '@nimi')
+    const reviewers = (process.env.IGNORED_REVIEWERS || '').split(',').join(' ')
 
-    core.debug(`Ignored Reviewers ${containsIgnoreReviewer ? 'yes' : 'no'}`)
+    core.debug(`Ignored Reviewers ${reviewers}`)
     await send()
 
     core.setOutput('Finished sending notification', new Date().toTimeString())

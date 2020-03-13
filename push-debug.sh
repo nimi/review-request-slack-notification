@@ -1,8 +1,8 @@
 #!/bin/bash
 
-yarn build
+npm run build
 
-yarn pack
+npm run pack
 
 git add .
 

@@ -4,7 +4,7 @@ import {send} from './send'
 async function run(): Promise<void> {
   try {
     core.debug(`Sending notification to slack ...`)
-    const reviewers = (process.env.IGNORED_REVIEWERS || '').split(',').join(' ')
+    const reviewers = process.env.SLACK_WEBHOOK_URLS
 
     core.debug(`Ignored Reviewers ${reviewers}`)
     await send()

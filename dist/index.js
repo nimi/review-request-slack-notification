@@ -856,7 +856,7 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             core.debug(`Sending notification to slack ...`);
-            const reviewers = (process.env.IGNORED_REVIEWERS || '').split(',').join(' ');
+            const reviewers = process.env.SLACK_WEBHOOK_URLS;
             core.debug(`Ignored Reviewers ${reviewers}`);
             yield send_1.send();
             core.setOutput('Finished sending notification', new Date().toTimeString());
@@ -3667,14 +3667,15 @@ const authorName = process.env.PULL_REQUEST_AUTHOR_NAME;
 const authorIconUrl = process.env.PULL_REQUEST_AUTHOR_ICON_URL;
 const compareBranchName = process.env.PULL_REQUEST_COMPARE_BRANCH_NAME;
 const baseBranchName = process.env.PULL_REQUEST_BASE_BRANCH_NAME;
-const pr = 'foo '; // process.env.PULL_REQUEST || []
+// const ignoredReviewers = (process.env.IGNORED_REVIEWERS || '').split(',')
+// const requestedReviewers = process.env.PULL_REQUEST_REQUESTED_REVIEWERS
 const message = {
     blocks: [
         {
             type: 'section',
             text: {
                 type: 'mrkdwn',
-                text: pr + '*<' + prUrl + '|' + prTitle + '>*'
+                text: '*<' + prUrl + '|' + prTitle + '>*'
             },
             accessory: {
                 type: 'image',

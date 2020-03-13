@@ -11,7 +11,8 @@ const authorName = process.env.PULL_REQUEST_AUTHOR_NAME as string
 const authorIconUrl = process.env.PULL_REQUEST_AUTHOR_ICON_URL as string
 const compareBranchName = process.env.PULL_REQUEST_COMPARE_BRANCH_NAME as string
 const baseBranchName = process.env.PULL_REQUEST_BASE_BRANCH_NAME as string
-const pr = 'foo ' // process.env.PULL_REQUEST || []
+// const ignoredReviewers = (process.env.IGNORED_REVIEWERS || '').split(',')
+// const requestedReviewers = process.env.PULL_REQUEST_REQUESTED_REVIEWERS
 
 const message = {
   blocks: [
@@ -19,7 +20,7 @@ const message = {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: pr + '*<' + prUrl + '|' + prTitle + '>*'
+        text: '*<' + prUrl + '|' + prTitle + '>*'
       },
       accessory: {
         type: 'image',

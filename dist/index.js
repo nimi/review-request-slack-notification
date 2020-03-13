@@ -3677,7 +3677,7 @@ const authorIconUrl = process.env.PULL_REQUEST_AUTHOR_ICON_URL;
 const compareBranchName = process.env.PULL_REQUEST_COMPARE_BRANCH_NAME;
 const baseBranchName = process.env.PULL_REQUEST_BASE_BRANCH_NAME;
 const webhookUrlConfig = JSON.parse(process.env.SLACK_WEBHOOK_URLS);
-const requestedReviewers = JSON.parse(process.env.PULL_REQUEST_REQUESTED_REVIEWERS);
+const requestedReviewers = process.env.PULL_REQUEST_REQUESTED_REVIEWERS || [];
 const message = {
     blocks: [
         {
@@ -3722,6 +3722,8 @@ const message = {
 };
 exports.send = () => __awaiter(void 0, void 0, void 0, function* () {
     return Promise.all(Object.entries(webhookUrlConfig).map(([user, webhookUrl]) => __awaiter(void 0, void 0, void 0, function* () {
+        if (typeof requestedReviewers == 'string')
+            return;
         if (requestedReviewers.some((reviewer) => reviewer === user)) {
             core.debug(`Sending slack notice to ${user}`);
             return axios_1.default.post(webhookUrl, message);

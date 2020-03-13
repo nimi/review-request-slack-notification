@@ -856,6 +856,7 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             core.debug(`Sending notification to slack ...`);
+            core.debug(`Ignored Reviewers ${process.env.IGNORED_REVIEWERS}`);
             yield send_1.send();
             core.setOutput('Finished sending notification', new Date().toTimeString());
         }

@@ -64,9 +64,9 @@ type WebhookResponse = AxiosResponse | undefined
 export const send = async (): Promise<WebhookResponse[]> =>
   Promise.all(
     Object.entries(webhookUrlConfig).map(async ([user, webhookUrl]) => {
-      if (requestedReviewers.some((reviewer: string) => reviewer === user)) {
-        core.debug(`Sending slack notice to ${user}`)
-        return axios.post(webhookUrl as string, message)
-      }
+      // if (requestedReviewers.some((reviewer: string) => reviewer === user)) {
+      core.debug(`Sending slack notice to ${user}`)
+      return axios.post(webhookUrl as string, message)
+      // }
     })
   )

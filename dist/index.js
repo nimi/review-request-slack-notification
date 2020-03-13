@@ -3722,10 +3722,10 @@ const message = {
 };
 exports.send = () => __awaiter(void 0, void 0, void 0, function* () {
     return Promise.all(Object.entries(webhookUrlConfig).map(([user, webhookUrl]) => __awaiter(void 0, void 0, void 0, function* () {
-        if (requestedReviewers.some((reviewer) => reviewer === user)) {
-            core.debug(`Sending slack notice to ${user}`);
-            return axios_1.default.post(webhookUrl, message);
-        }
+        // if (requestedReviewers.some((reviewer: string) => reviewer === user)) {
+        core.debug(`Sending slack notice to ${user}`);
+        return axios_1.default.post(webhookUrl, message);
+        // }
     })));
 });
 

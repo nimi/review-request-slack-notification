@@ -856,7 +856,8 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             core.debug(`Sending notification to slack ...`);
-            core.debug(`Ignored Reviewers ${process.env.IGNORED_REVIEWERS}`);
+            const containsIgnoreReviewer = JSON.parse(process.env.IGNORED_REVIEWERS || '[]').some((reviewer) => reviewer === '@nimi');
+            core.debug(`Ignored Reviewers ${containsIgnoreReviewer ? 'yes' : 'no'}`);
             yield send_1.send();
             core.setOutput('Finished sending notification', new Date().toTimeString());
         }

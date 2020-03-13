@@ -3665,14 +3665,14 @@ const authorName = process.env.PULL_REQUEST_AUTHOR_NAME;
 const authorIconUrl = process.env.PULL_REQUEST_AUTHOR_ICON_URL;
 const compareBranchName = process.env.PULL_REQUEST_COMPARE_BRANCH_NAME;
 const baseBranchName = process.env.PULL_REQUEST_BASE_BRANCH_NAME;
-const sendHereMention = process.env.IS_SEND_HERE_MENTION ? '<!here>\n' : '';
+const pr = process.env.PULL_REQUEST;
 const message = {
     blocks: [
         {
             type: 'section',
             text: {
                 type: 'mrkdwn',
-                text: sendHereMention + '*<' + prUrl + '|' + prTitle + '>*'
+                text: pr + '*<' + prUrl + '|' + prTitle + '>*'
             },
             accessory: {
                 type: 'image',

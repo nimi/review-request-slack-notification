@@ -858,7 +858,7 @@ function run() {
             core.debug(`Sending notification to slack ...`);
             const urls = JSON.parse(process.env.SLACK_WEBHOOK_URLS);
             // const reviewers = Object.keys(process.env.SLACK_WEBHOOK_URLS)
-            core.debug(`Ignored Reviewers ${Object.values(urls).join(' ')}`);
+            core.debug(`Ignored Reviewers ${Object.values(urls).join(' vvv ')} ${typeof urls}`);
             yield send_1.send();
             core.setOutput('Finished sending notification', new Date().toTimeString());
         }

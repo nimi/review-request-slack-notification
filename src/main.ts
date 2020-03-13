@@ -8,9 +8,7 @@ async function run(): Promise<void> {
     // const reviewers = Object.keys(process.env.SLACK_WEBHOOK_URLS)
 
     core.debug(
-      `Ignored Reviewers ${Object.keys(urls)[0]
-        .split('')
-        .join(' ')} ${typeof urls}`
+      `Ignored Reviewers ${Object.keys(urls)[0] === 'nimi' ? 'yes' : 'no'}`
     )
     await send()
 

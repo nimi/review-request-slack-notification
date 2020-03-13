@@ -11,7 +11,7 @@ const authorName = process.env.PULL_REQUEST_AUTHOR_NAME as string
 const authorIconUrl = process.env.PULL_REQUEST_AUTHOR_ICON_URL as string
 const compareBranchName = process.env.PULL_REQUEST_COMPARE_BRANCH_NAME as string
 const baseBranchName = process.env.PULL_REQUEST_BASE_BRANCH_NAME as string
-const pr = 'foo' // process.env.PULL_REQUEST || {}
+const pr = 'foo ' // process.env.PULL_REQUEST || []
 
 const message = {
   blocks: [

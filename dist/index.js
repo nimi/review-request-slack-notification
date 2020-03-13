@@ -856,7 +856,6 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             core.debug(`Sending notification to slack ...`);
-            core.debug(`GitHub object ${JSON.stringify(process.env.PULL_REQUEST || {})}`);
             yield send_1.send();
             core.setOutput('Finished sending notification', new Date().toTimeString());
         }
@@ -3666,7 +3665,7 @@ const authorName = process.env.PULL_REQUEST_AUTHOR_NAME;
 const authorIconUrl = process.env.PULL_REQUEST_AUTHOR_ICON_URL;
 const compareBranchName = process.env.PULL_REQUEST_COMPARE_BRANCH_NAME;
 const baseBranchName = process.env.PULL_REQUEST_BASE_BRANCH_NAME;
-const pr = 'foo'; // process.env.PULL_REQUEST || {}
+const pr = 'foo '; // process.env.PULL_REQUEST || []
 const message = {
     blocks: [
         {

@@ -1,10 +1,11 @@
-name: "build-test"
-on: # rebuild any PRs and main branch changes
+name: "request-review"
+on:
   pull_request:
     types: [review_requested, assigned, unassigned]
 
 env:
   SLACK_WEBHOOK_URL : ${{ secrets.SLACK_WEBHOOK_URL }}
+  IGNORED_REVIEWERS : ${{ toJson(secrets.SLACK_WEBHOOK_URL) }}
   PULL_REQUEST_NUMBER : ${{ github.event.pull_request.number }}
   PULL_REQUEST_TITLE : ${{ github.event.pull_request.title }}
   PULL_REQUEST_AUTHOR_NAME : ${{ github.event.pull_request.user.login }}
@@ -13,10 +14,10 @@ env:
   PULL_REQUEST_BODY : ${{ github.event.pull_request.body }}
   PULL_REQUEST_COMPARE_BRANCH_NAME : ${{ github.event.pull_request.head.ref }}
   PULL_REQUEST_BASE_BRANCH_NAME : ${{ github.event.pull_request.base.ref }}
-  PULL_REQUEST : ${{ toJson(github.event.pull_request) }}
+  REQUESTED_REVIEWERS: ${{ toJson(github.event.pull_request.requested_reviewers) }}
 
 jobs:
-  review_requested: # make sure the action works on a clean machine without building
+  review_requested:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1

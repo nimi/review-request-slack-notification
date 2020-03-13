@@ -853,12 +853,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(__webpack_require__(470));
 const send_1 = __webpack_require__(935);
 function run() {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             core.debug(`Sending notification to slack ...`);
-            const urls = JSON.parse(process.env.SLACK_WEBHOOK_URLS);
-            // const reviewers = Object.keys(process.env.SLACK_WEBHOOK_URLS)
-            core.debug(`Ignored Reviewers ${Object.keys(urls)[0] === 'nimi' ? 'yes' : 'no'}`);
+            const ignoredReviewers = (_a = process.env.IGNORED_REVIEWERS) === null || _a === void 0 ? void 0 : _a.split(',').join(' ');
+            core.debug(`Ignored Reviewers: ${Object.keys(ignoredReviewers || 'not defined')}`);
             yield send_1.send();
             core.setOutput('Finished sending notification', new Date().toTimeString());
         }
@@ -3654,10 +3654,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const core = __importStar(__webpack_require__(470));
 const axios_1 = __importDefault(__webpack_require__(53));
 const url = process.env.SLACK_WEBHOOK_URL;
 const prNum = process.env.PULL_REQUEST_NUMBER;
@@ -3668,8 +3676,8 @@ const authorName = process.env.PULL_REQUEST_AUTHOR_NAME;
 const authorIconUrl = process.env.PULL_REQUEST_AUTHOR_ICON_URL;
 const compareBranchName = process.env.PULL_REQUEST_COMPARE_BRANCH_NAME;
 const baseBranchName = process.env.PULL_REQUEST_BASE_BRANCH_NAME;
-// const ignoredReviewers = (process.env.IGNORED_REVIEWERS || '').split(',')
-// const requestedReviewers = process.env.PULL_REQUEST_REQUESTED_REVIEWERS
+const webhookUrlConfig = JSON.parse(process.env.SLACK_WEBHOOK_URLS);
+const requestedReviewers = JSON.parse(process.env.PULL_REQUEST_REQUESTED_REVIEWERS);
 const message = {
     blocks: [
         {
@@ -3712,7 +3720,14 @@ const message = {
         }
     ]
 };
-exports.send = () => __awaiter(void 0, void 0, void 0, function* () { return axios_1.default.post(url, message); });
+exports.send = () => __awaiter(void 0, void 0, void 0, function* () {
+    return Promise.all(Object.entries(webhookUrlConfig).map(([user, webhookUrl]) => __awaiter(void 0, void 0, void 0, function* () {
+        if (requestedReviewers.some((reviewer) => reviewer === user)) {
+            core.debug(`Sending slack notice to ${user}`);
+            return axios_1.default.post(webhookUrl, message);
+        }
+    })));
+});
 
 
 /***/ }),

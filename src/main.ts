@@ -4,11 +4,10 @@ import {send} from './send'
 async function run(): Promise<void> {
   try {
     core.debug(`Sending notification to slack ...`)
-    const urls = JSON.parse(process.env.SLACK_WEBHOOK_URLS as string)
-    // const reviewers = Object.keys(process.env.SLACK_WEBHOOK_URLS)
+    const ignoredReviewers = process.env.IGNORED_REVIEWERS?.split(',').join(' ')
 
     core.debug(
-      `Ignored Reviewers ${Object.keys(urls)[0] === 'nimi' ? 'yes' : 'no'}`
+      `Ignored Reviewers: ${Object.keys(ignoredReviewers || 'not defined')}`
     )
     await send()
 

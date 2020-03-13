@@ -1,5 +1,6 @@
 /* eslint-disable prefer-template */
 'use strict'
+import * as core from '@actions/core'
 import axios, {AxiosResponse} from 'axios'
 
 const url = process.env.SLACK_WEBHOOK_URL as string
@@ -11,8 +12,10 @@ const authorName = process.env.PULL_REQUEST_AUTHOR_NAME as string
 const authorIconUrl = process.env.PULL_REQUEST_AUTHOR_ICON_URL as string
 const compareBranchName = process.env.PULL_REQUEST_COMPARE_BRANCH_NAME as string
 const baseBranchName = process.env.PULL_REQUEST_BASE_BRANCH_NAME as string
-// const ignoredReviewers = (process.env.IGNORED_REVIEWERS || '').split(',')
-// const requestedReviewers = process.env.PULL_REQUEST_REQUESTED_REVIEWERS
+const webhookUrlConfig = JSON.parse(process.env.SLACK_WEBHOOK_URLS as string)
+const requestedReviewers = JSON.parse(
+  process.env.PULL_REQUEST_REQUESTED_REVIEWERS as string
+)
 
 const message = {
   blocks: [
@@ -57,4 +60,14 @@ const message = {
   ]
 }
 
-export const send = async (): Promise<AxiosResponse> => axios.post(url, message)
+type WebhookResponse = AxiosResponse | undefined
+
+export const send = async (): Promise<WebhookResponse[]> =>
+  Promise.all(
+    Object.entries(webhookUrlConfig).map(async ([user, webhookUrl]) => {
+      if (requestedReviewers.some((reviewer: string) => reviewer === user)) {
+        core.debug(`Sending slack notice to ${user}`)
+        return axios.post(webhookUrl as string, message)
+      }
+    })
+  )

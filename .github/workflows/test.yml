@@ -15,7 +15,7 @@ env:
   PULL_REQUEST_BODY : ${{ github.event.pull_request.body }}
   PULL_REQUEST_COMPARE_BRANCH_NAME : ${{ github.event.pull_request.head.ref }}
   PULL_REQUEST_BASE_BRANCH_NAME : ${{ github.event.pull_request.base.ref }}
-  REQUESTED_REVIEWERS: ${{ toJson(github.event.pull_request.requested_reviewers) }}
+  PULL_REQUEST_REQUESTED_REVIEWERS: ${{ toJson(github.event.pull_request.requested_reviewers) }}
 
 jobs:
   review_requested:

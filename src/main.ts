@@ -7,7 +7,7 @@ async function run(): Promise<void> {
     const urls = JSON.parse(process.env.SLACK_WEBHOOK_URLS as string)
     // const reviewers = Object.keys(process.env.SLACK_WEBHOOK_URLS)
 
-    core.debug(`Ignored Reviewers ${urls.nimi}`)
+    core.debug(`Ignored Reviewers ${Object.keys(urls).join(' ')}`)
     await send()
 
     core.setOutput('Finished sending notification', new Date().toTimeString())

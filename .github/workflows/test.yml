@@ -5,7 +5,7 @@ on:
 
 env:
   SLACK_WEBHOOK_URL : ${{ secrets.SLACK_WEBHOOK_URL }}
-  SLACK_WEBHOOK_URLS : ${{ toJson(secrets.SLACK_WEBHOOK_URLS) }}
+  SLACK_WEBHOOK_URLS : ${{ secrets.SLACK_WEBHOOK_URLS }}
   IGNORED_REVIEWERS : ${{ secrets.IGNORED_REVIEWERS }}
   PULL_REQUEST_NUMBER : ${{ github.event.pull_request.number }}
   PULL_REQUEST_TITLE : ${{ github.event.pull_request.title }}
